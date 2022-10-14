@@ -1,4 +1,4 @@
-import { fetchPics } from './fetch-pics';
+import { fetchPics, fetchPics } from './fetch-pics';
 // import { renderGalleryMarkup } from './template';
 import Notiflix from 'notiflix';
 
@@ -8,8 +8,11 @@ const refs = {
   loadMoreBtn: document.querySelector('.load-more'),
 };
 
+let inputValue = '';
 let page = 1;
-let perPage = 40;
+const perPage = 3;
+
+refs.loadMoreBtn.style.display = 'none';
 
 refs.searchForm.addEventListener('submit', onSearchFormSubmit);
 refs.loadMoreBtn.addEventListener('click', onLoadMoreBtnClick);
@@ -17,18 +20,32 @@ refs.loadMoreBtn.addEventListener('click', onLoadMoreBtnClick);
 function onSearchFormSubmit(e) {
   e.preventDefault();
 
-  const inputValue = e.currentTarget.elements.searchQuery.value;
+  refs.gallery.innerHTML = '';
 
-  fetchPics(inputValue, page).then(pic => {
+  inputValue = e.currentTarget.elements.searchQuery.value;
+  loadPics(inputValue, page);
+  refs.loadMoreBtn.style.display = 'none';
+}
+
+async function loadPics(inputValue, page) {
+  refs.loadMoreBtn.style.display = 'none';
+
+  try {
+    const pic = await fetchPics(inputValue, page, perPage);
+
     const stats = pic.hits;
 
-    if (stats.length === [].length) {
+    if (stats.length === 0) {
       noImagesFound();
     } else {
       renderGalleryMarkup(stats);
-      page += 1;
     }
-  });
+  } catch (error) {
+    console.log(error.message);
+  } finally {
+    refs.searchForm.reset();
+  }
+  refs.loadMoreBtn.style.display = 'block';
 }
 
 function noImagesFound() {
@@ -38,8 +55,6 @@ function noImagesFound() {
 }
 
 function renderGalleryMarkup(stats) {
-  // console.log(stats);
-
   stats.forEach(
     ({
       webformatURL,
@@ -51,7 +66,7 @@ function renderGalleryMarkup(stats) {
       downloads,
     }) => {
       const markup = `<div class="photo-card">
-  <img src="${webformatURL}" alt="${tags}" loading="lazy" />
+  <img src="${webformatURL}" alt="${tags}" loading="lazy" width="350px" height="350px" />
   <div class="info">
     <p class="info-item">
       <b>Likes${likes}</b>
@@ -72,6 +87,7 @@ function renderGalleryMarkup(stats) {
   );
 }
 
-function onLoadMoreBtnClick(e) {
-  console.log(e.target);
+function onLoadMoreBtnClick() {
+  page += 1;
+  loadPics(inputValue, page);
 }
