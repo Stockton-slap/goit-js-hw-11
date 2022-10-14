@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 const BASE_URL = 'https://pixabay.com';
 
 export function fetchPics(name, page, perPage) {

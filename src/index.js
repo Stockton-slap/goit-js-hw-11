@@ -1,6 +1,7 @@
-import { fetchPics, fetchPics } from './fetch-pics';
+import { fetchPics } from './fetch-pics';
 // import { renderGalleryMarkup } from './template';
 import Notiflix from 'notiflix';
+import axios from 'axios';
 
 const refs = {
   searchForm: document.querySelector('.search-form'),
@@ -32,8 +33,17 @@ async function loadPics(inputValue, page) {
 
   try {
     const pic = await fetchPics(inputValue, page, perPage);
-
     const stats = pic.hits;
+    const hitsPerPage = pic.totalHits / perPage;
+
+    refs.loadMoreBtn.style.display = 'block';
+
+    if (page > hitsPerPage) {
+      Notiflix.Notify.info(
+        "We're sorry, but you've reached the end of search results."
+      );
+      refs.loadMoreBtn.style.display = 'none';
+    }
 
     if (stats.length === 0) {
       noImagesFound();
@@ -45,7 +55,6 @@ async function loadPics(inputValue, page) {
   } finally {
     refs.searchForm.reset();
   }
-  refs.loadMoreBtn.style.display = 'block';
 }
 
 function noImagesFound() {
