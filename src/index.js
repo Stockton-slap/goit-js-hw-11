@@ -1,5 +1,4 @@
 import { fetchPics } from './fetch-pics';
-// import { renderGalleryMarkup } from './template';
 import Notiflix from 'notiflix';
 import axios from 'axios';
 
@@ -23,14 +22,16 @@ function onSearchFormSubmit(e) {
 
   refs.gallery.innerHTML = '';
 
-  inputValue = e.currentTarget.elements.searchQuery.value;
+  inputValue = e.currentTarget.elements.searchQuery.value.trim();
   loadPics(inputValue, page);
   refs.loadMoreBtn.style.display = 'none';
 }
 
 async function loadPics(inputValue, page) {
   refs.loadMoreBtn.style.display = 'none';
-
+  if (inputValue === '') {
+    return;
+  }
   try {
     const pic = await fetchPics(inputValue, page, perPage);
     const stats = pic.hits;
@@ -75,19 +76,19 @@ function renderGalleryMarkup(stats) {
       downloads,
     }) => {
       const markup = `<div class="photo-card">
-  <img src="${webformatURL}" alt="${tags}" loading="lazy" width="350px" height="350px" />
+  <img src="${webformatURL}" alt="${tags}" loading="lazy" width="350px" height="250px" />
   <div class="info">
     <p class="info-item">
-      <b>Likes${likes}</b>
+      <b>Likes</b></br>${likes}
     </p>
     <p class="info-item">
-      <b>Views${views}</b>
+      <b>Views</b></br>${views}
     </p>
     <p class="info-item">
-      <b>Comments${comments}</b>
+      <b>Comments</b></br>${comments}
     </p>
     <p class="info-item">
-      <b>Downloads${downloads}</b>
+      <b>Downloads</b></br>${downloads}
     </p>
   </div>
 </div>`;

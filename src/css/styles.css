@@ -1,0 +1,52 @@
+body {
+    margin: 0;
+ 
+}
+
+.search-form {
+    display: flex;
+    justify-content: center;
+
+    background-color:darkslateblue;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+input {
+    padding: 6px;
+    padding-right: 100px;
+}
+
+.submit {
+        background-color: lightgrey;
+}
+
+.gallery {
+    display: flex;
+    justify-content:space-around;
+    flex-wrap: wrap;
+}
+
+.photo-card {
+    margin: 20px;
+box-shadow: 8px 8px 29px 0px rgba(0, 0, 0, 0.59);
+}
+
+.info {
+    display: flex;
+    justify-content: space-around;
+    font-size: small;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    text-align: center;
+    margin: 0;
+}
+
+.load-more {
+    background-color: darkslateblue;
+    color: #fff;
+    padding: 10px 30px 10px 30px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: small;
+    margin: 0 auto;
+}
+
