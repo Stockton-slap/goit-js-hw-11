@@ -6,10 +6,13 @@ body {
 .search-form {
     display: flex;
     justify-content: center;
+    width: 100%;
 
     background-color:darkslateblue;
     padding-top: 15px;
     padding-bottom: 15px;
+
+    position: fixed;
 }
 
 input {
@@ -18,7 +21,9 @@ input {
 }
 
 .submit {
-        background-color: lightgrey;
+    background-color: lightgrey;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 .gallery {
@@ -28,8 +33,12 @@ input {
 }
 
 .photo-card {
-    margin: 20px;
-box-shadow: 8px 8px 29px 0px rgba(0, 0, 0, 0.59);
+    box-shadow: 8px 8px 29px 0px rgba(0, 0, 0, 0.59);
+    margin-top: 10px;
+}
+
+.photo-card:nth-child(-n + 4) {
+    margin-top: 70px;
 }
 
 .info {
@@ -44,10 +53,18 @@ box-shadow: 8px 8px 29px 0px rgba(0, 0, 0, 0.59);
 .load-more {
     background-color: darkslateblue;
     color: #fff;
-    padding: 10px 30px 10px 30px;
+    
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: small;
-    margin: 0 auto;
+
+    margin: auto;
+    margin-top: 30px;
     margin-bottom: 30px;
+
+    padding: 10px 30px 10px 30px;
+
+    border-radius: 5px;
+
+    cursor: pointer;
 }
 
