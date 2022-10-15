@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const BASE_URL = 'https://pixabay.com';
 
-export function fetchPics(name, page, perPage) {
+export async function fetchPics(name, page, perPage) {
   const params = new URLSearchParams({
     key: '30589696-b681d27f2a9352756d0078443',
     q: name,
@@ -13,5 +13,10 @@ export function fetchPics(name, page, perPage) {
     per_page: perPage,
   });
 
-  return fetch(`${BASE_URL}/api?${params}`).then(response => response.json());
+  try {
+    const response = await axios.get(`${BASE_URL}/api?${params}`);
+    return response;
+  } catch (error) {
+    return error;
+  }
 }
