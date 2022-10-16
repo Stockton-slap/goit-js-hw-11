@@ -51,8 +51,8 @@ async function loadPics(inputValue, page) {
       noImagesFound();
     } else {
       renderGalleryMarkup(stats);
-      smoothScroll();
     }
+
     return pic;
   } catch (error) {
     console.log(error);
@@ -117,9 +117,10 @@ function renderGalleryMarkup(stats) {
   });
 }
 
-function onLoadMoreBtnClick() {
+async function onLoadMoreBtnClick() {
   page += 1;
-  loadPics(inputValue, page);
+  await loadPics(inputValue, page);
+  smoothScroll();
 }
 
 function totalHitsFound(totalHits) {
