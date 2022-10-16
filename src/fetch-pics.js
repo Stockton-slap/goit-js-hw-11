@@ -14,7 +14,7 @@ export async function fetchPics(name, page, perPage) {
   });
 
   try {
-    const response = await axios.get(`${BASE_URL}/api?${params}`);
+    const response = await axios.get(`${BASE_URL}/api/?${params}`);
     return response;
   } catch (error) {
     return error;
